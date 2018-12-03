@@ -1,6 +1,7 @@
 package com.example.luisangel.biorvel.Adaptadores;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,22 +33,25 @@ public class PersonajeAdapter extends RecyclerView.Adapter<PersonajeAdapter.Pers
     @Override
     public void onBindViewHolder(PersonajeViewHolder holder, int position){
         holder.nombre.setText(listaPersonaje.get(position).getName());
-        Glide.with(context).load(listaPersonaje.get(position).getImagen()).into(holder.imagen);
+        //Glide.with(context).load(listaPersonaje.get(position).getImagen()).into(holder.imagen);
+        holder.imagen.setImageResource(R.drawable.gradient);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return listaPersonaje.size();
     }
 
     public class PersonajeViewHolder extends RecyclerView.ViewHolder {
         TextView nombre;
         ImageView imagen;
+        CardView carta;
 
         public PersonajeViewHolder(View itemView) {
             super(itemView);
             nombre = (TextView) itemView.findViewById(R.id.idNombre);
             imagen = (ImageView) itemView.findViewById(R.id.idImagen);
+            carta = (CardView) itemView.findViewById(R.id.cartaPersonaje);
         }
     }
 }

@@ -6,7 +6,7 @@
     tools:context=".Fragments.HeroesFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerId"
+        android:id="@+id/recyclerId1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 

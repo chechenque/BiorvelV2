@@ -22,19 +22,18 @@ public class PersonajeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personaje);
 
-        ArrayList<Personaje> personaje = (ArrayList<Personaje>) bundle.get("Personaje");
+        //creando los views
         nombre = (TextView) findViewById(R.id.nombre);
         descripcion = (TextView) findViewById(R.id.descripcion);
         imagen = (ImageView) findViewById(R.id.imagenP);
 
+        //agregando datos a los views
+        nombre.setText(bundle.getString("nombreKey"));
+        descripcion.setText(bundle.getString("descripcionKey"));
 
-        Personaje unico = new Personaje(personaje.get(0).getName(),personaje.get(0).getDescription(),personaje.get(0).getPeliculas(),personaje.get(0).getImagen());
-
-        nombre.setText(unico.getName());
-        descripcion.setText(unico.getDescription());
-
+        //agregando imagen al ImageView
         Glide.with(this)
-                .load(unico.getImagen())
+                .load(bundle.getString("imagenKey"))
                 .into(imagen);
     }
 }

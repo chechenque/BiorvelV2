@@ -48,11 +48,20 @@ public class HeroesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_heroes, container, false);
         listaPersonajes = new ArrayList<>();
+        listaPersonajes.add(new Personaje("Dinosaurio sin mandíbula",
+                "Sobreviviente de la extincion al costo de su mandibula",
+                "Extincion",""));
+        listaPersonajes.add(new Personaje("Dinosaurio sin mandíbula",
+                "Sobreviviente de la extincion al costo de su mandibula",
+                "Extincion",""));
+        listaPersonajes.add(new Personaje("Dinosaurio sin mandíbula",
+                "Sobreviviente de la extincion al costo de su mandibula",
+                "Extincion",""));
 
-        recyclerPersonajes = (RecyclerView) vista.findViewById(R.id.recyclerId);
+        recyclerPersonajes = (RecyclerView) vista.findViewById(R.id.recyclerId1);
         recyclerPersonajes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        llenarLista();
+        //listaPersonajes = llenarLista();
 
         PersonajeAdapter adapter = new PersonajeAdapter(listaPersonajes);
         recyclerPersonajes.setAdapter(adapter);
@@ -60,7 +69,8 @@ public class HeroesFragment extends Fragment {
         return vista;
     }
 
-    public void llenarLista(){
+    public ArrayList<Personaje> llenarLista(){
+        final ArrayList<Personaje> regreso = new ArrayList<>();
         ld = new ListaDescripcion();
         ArrayList<String> busqueda = ld.rellenaNombresHeroes();
 
@@ -87,7 +97,7 @@ public class HeroesFragment extends Fragment {
                             JSONObject image = personaje.getJSONObject("thumbnail");
 
                             String imagenPersonaje = image.getString("path") + "." + image.getString("extension");
-                            listaPersonajes.add(new Personaje(nombre,peliculas,descripcion,imagenPersonaje));
+                            regreso.add(new Personaje(nombre,peliculas,descripcion,imagenPersonaje));
                         }
                     }catch (JSONException e1){
                         e1.printStackTrace();
@@ -98,6 +108,7 @@ public class HeroesFragment extends Fragment {
                 public void onFailure(Call<JsonObject> call, Throwable t) { }
             });
         }
+        return regreso;
     }
 
 }

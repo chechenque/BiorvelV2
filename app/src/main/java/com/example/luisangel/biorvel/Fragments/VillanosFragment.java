@@ -48,7 +48,7 @@ public class VillanosFragment extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_villanos, container, false);
         listaPersonajes = new ArrayList<>();
 
-        recyclerPersonajes = (RecyclerView) vista.findViewById(R.id.recyclerId);
+        recyclerPersonajes = (RecyclerView) vista.findViewById(R.id.recyclerId2);
         recyclerPersonajes.setLayoutManager(new LinearLayoutManager(getContext()));
 
         llenarLista();
