@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 
 public class PersonajeActivity extends AppCompatActivity {
-    Bundle bundle = getIntent().getExtras();
+    Bundle bundle;// = getIntent().getExtras();
     TextView nombre;
     TextView descripcion;
     ImageView imagen;
@@ -21,6 +21,7 @@ public class PersonajeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personaje);
+        bundle = getIntent().getExtras();
 
         //creando los views
         nombre = (TextView) findViewById(R.id.nombre);

@@ -19,9 +19,12 @@ public class PersonajeAdapter extends RecyclerView.Adapter<PersonajeAdapter.Pers
 
     ArrayList<Personaje> listaPersonaje;
     Context context;
+    RecyclerViewOnItemClickListener recyclerViewOnItemClickListener;
 
-    public PersonajeAdapter(ArrayList<Personaje> listaPersonaje){
+    public PersonajeAdapter(Context context, ArrayList<Personaje> listaPersonaje, RecyclerViewOnItemClickListener recyclerViewOnItemClickListener){
         this.listaPersonaje = listaPersonaje;
+        this.recyclerViewOnItemClickListener = recyclerViewOnItemClickListener;
+        this.context = context;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class PersonajeAdapter extends RecyclerView.Adapter<PersonajeAdapter.Pers
     @Override
     public void onBindViewHolder(PersonajeViewHolder holder, int position){
         holder.nombre.setText(listaPersonaje.get(position).getName());
-        //Glide.with(context).load(listaPersonaje.get(position).getImagen()).into(holder.imagen);
+        Glide.with(context).load(listaPersonaje.get(position).getImagen()).into(holder.imagen);
         holder.imagen.setImageResource(R.drawable.gradient);
     }
 
@@ -42,7 +45,7 @@ public class PersonajeAdapter extends RecyclerView.Adapter<PersonajeAdapter.Pers
         return listaPersonaje.size();
     }
 
-    public class PersonajeViewHolder extends RecyclerView.ViewHolder {
+    public class PersonajeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView nombre;
         ImageView imagen;
         CardView carta;
@@ -51,7 +54,12 @@ public class PersonajeAdapter extends RecyclerView.Adapter<PersonajeAdapter.Pers
             super(itemView);
             nombre = (TextView) itemView.findViewById(R.id.idNombre);
             imagen = (ImageView) itemView.findViewById(R.id.idImagen);
+            itemView.setOnClickListener(this);
             carta = (CardView) itemView.findViewById(R.id.cartaPersonaje);
+        }
+
+        public void onClick(View v){
+            recyclerViewOnItemClickListener.onClick(v, getAdapterPosition());
         }
     }
 }
