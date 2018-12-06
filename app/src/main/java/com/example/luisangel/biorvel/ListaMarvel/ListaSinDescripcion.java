@@ -19,7 +19,7 @@ public class ListaSinDescripcion {
         lista.add("Maria Hill");
         lista.add("Happy Hogan");
         lista.add("Sharon Carter");
-        lista.add("Quick Silver");
+        lista.add("Quicksilver");
         lista.add("Scarlet Witch");
         lista.add("Peter Quill");
         lista.add("Drax");
@@ -29,7 +29,7 @@ public class ListaSinDescripcion {
         lista.add("Black Panther");
         lista.add("Dr. Strange (Marvel: Avengers Alliance)");
         lista.add("Mantis");
-        lista.add("Okoye");
+        lista.add("Okoye");/**/
         return lista;
     }
 
@@ -77,8 +77,7 @@ public class ListaSinDescripcion {
         lista.add("Ancient One");
         lista.add("Mordo");
         lista.add("Dormammu");
-        lista.add("Ego");
-        lista.add("N'Jadaka");
+        lista.add("Ego");//15
         return lista;
     }
 
@@ -98,7 +97,6 @@ public class ListaSinDescripcion {
         lista.add("He is a former member of the Masters of the Mystic Arts and was a close ally to the Ancient One, assisting her with recruiting and training their new soldiers. ");
         lista.add("He is a primordial, inter-dimensional entity who wields apocalyptic levels of supernatural power and is the ruler of the Dark Dimension. Dormammu convinced Kaecilius to use his power to destroy the Masters of the Mystic Arts and bring the Dark Dimension to Earth. Before Dormammu could complete his plans, he was confronted by Doctor Strange, who used the Eye of Agamotto to trap Dormammu in an endless time loop until he agreed to leave Earth and take Kaecilius with him. ");
         lista.add("He was a Celestial, a primordial and an extremely powerful being, as well as the biological father of Star-Lord. A ruthless, megalomaniacal entity possessing a god complex,");
-        lista.add("Erik Stevens (born N'Jadaka) was a former African-American black-ops soldier of Wakandan origin through his father, Prince N'Jobu. His savagery while serving in the U.S. black-ops unit, earned him the nickname Killmonger.");
         return lista;
     }
 

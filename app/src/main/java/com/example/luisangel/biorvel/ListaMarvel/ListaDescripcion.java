@@ -25,13 +25,13 @@ public class ListaDescripcion {
         lista.add("Leader");
         lista.add("Justin Hammer");
         lista.add("Whiplash (Mark Scarlotti)");
-        lista.add("Arnin Zola");
+        lista.add("Arnim Zola");
         lista.add("Thanos");
         lista.add("Crossbones");
         lista.add("Ultron");
         lista.add("Vulture (Adrian Toomes)");
         lista.add("Shocker (Herman Schultz)");
-        lista.add("Tinkerer");
+        lista.add("Tinkerer");//11
         return lista;
     }
 }

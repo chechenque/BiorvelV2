@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ public class HeroesFragment extends Fragment {
     RecyclerView recyclerPersonajes;
     ArrayList<Personaje> listaPersonajes;
     ListaDescripcion ld;
+    ListaCreadaCero lcc;
+    ListaSinDescripcion lsd;
 
     public HeroesFragment() {
         // Required empty public constructor
@@ -58,7 +61,11 @@ public class HeroesFragment extends Fragment {
         recyclerPersonajes.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ld = new ListaDescripcion();
+        lcc = new ListaCreadaCero();
+        lsd = new ListaSinDescripcion();
+
         ArrayList<String> busqueda = ld.rellenaNombresHeroes();
+        busqueda.addAll(lsd.rellenaNombresHeroes());
 
         RestApiAdapter restApiAdapter = new RestApiAdapter();
         Service service = restApiAdapter.getPersonajeService();
@@ -79,25 +86,31 @@ public class HeroesFragment extends Fragment {
                             JSONObject personaje = jsonArray.getJSONObject(0);
 
 
-                            String nombre = personaje.getString("name") + "/" + personaje.getString("description");
-                            String[] split = nombre.split("/");
-                            String descripcion = "";
-
-                            if(split.length == 1){
-                                descripcion = "error";
-                            }else{
-                                descripcion = split[1];
-                            }
-
-                            nombre = split[0];
+                            String nombre = personaje.getString("name");
+                            String descripcion = personaje.getString("description");
 
 
                             JSONObject image = personaje.getJSONObject("thumbnail");
 
                             String imagenPersonaje = image.getString("path") + "." + image.getString("extension");
 
-                            listaPersonajes.add(new Personaje(nombre,peliculas,descripcion,imagenPersonaje));
+                            listaPersonajes.add(new Personaje(nombre,descripcion,peliculas,imagenPersonaje));
+
+                            if(listaPersonajes.size() ==11+24){
+                                ArrayList<String> guardaD =lsd.rellenaDescripcionHeroes();
+                                Log.d("HeroesFragment", listaPersonajes.get(9).getName());
+                                String d;
+                                /*for(int i = 0; i< listaPersonajes.size()-11; ++i){
+                                    d = guardaD.get(i);
+                                    listaPersonajes.get(i+11).setDescription(d);
+                                }*/
+                                listaPersonajes.addAll(lcc.creaPersonajesHeroes());
+                            }
+
                             PersonajeAdapter adapter;
+                            /*if(listaPersonajes.size() >0) {
+                                Log.d("HeroesFragment", listaPersonajes.get(0).getDescription());
+                            }*/
                             recyclerPersonajes.setAdapter(adapter = new PersonajeAdapter(getActivity(),listaPersonajes,new RecyclerViewOnItemClickListener() {
                                 @Override
                                 public void onClick(View view, int position) {
@@ -108,15 +121,9 @@ public class HeroesFragment extends Fragment {
                                     String imagenKey = listaPersonajes.get(position).getImagen();
                                     Intent intent = new Intent(getActivity(),PersonajeActivity.class);
 
-                                    if(descripcionKey == ""){
-                                        intent.putExtra("descripcionKey","NO se que pasa");
-                                    }else{
-                                        intent.putExtra("descripcionKey",descripcionKey);
-                                    }
-
                                     //Pasando los datos
                                     intent.putExtra("nombreKey", nombreKey);
-
+                                    intent.putExtra("descripcionKey",descripcionKey);
                                     //intent.putExtra("peliculasKey",peliculasKey);
                                     intent.putExtra("imagenKey",imagenKey);
                                     startActivity(intent);
@@ -134,11 +141,6 @@ public class HeroesFragment extends Fragment {
                 public void onFailure(Call<JsonObject> call, Throwable t) { }
             });
         }
-
-
-
-
-
         return vista;
     }
 }

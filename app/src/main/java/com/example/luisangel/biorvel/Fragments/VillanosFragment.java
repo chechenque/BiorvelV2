@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import android.widget.Toast;
 
 import com.example.luisangel.biorvel.Adaptadores.PersonajeAdapter;
 import com.example.luisangel.biorvel.Adaptadores.RecyclerViewOnItemClickListener;
+import com.example.luisangel.biorvel.ListaMarvel.ListaCreadaCero;
 import com.example.luisangel.biorvel.ListaMarvel.ListaDescripcion;
+import com.example.luisangel.biorvel.ListaMarvel.ListaSinDescripcion;
 import com.example.luisangel.biorvel.MarvelAPI.Constants;
 import com.example.luisangel.biorvel.MarvelAPI.RestApiAdapter;
 import com.example.luisangel.biorvel.MarvelAPI.Service;
@@ -39,6 +42,8 @@ public class VillanosFragment extends Fragment {
     RecyclerView recyclerPersonajes;
     ArrayList<Personaje> listaPersonajes;
     ListaDescripcion ld;
+    ListaCreadaCero lcc;
+    ListaSinDescripcion lsd;
 
 
     public VillanosFragment() {
@@ -54,13 +59,15 @@ public class VillanosFragment extends Fragment {
         listaPersonajes = new ArrayList<>();
         recyclerPersonajes = (RecyclerView) vista.findViewById(R.id.recyclerId2);
         recyclerPersonajes.setLayoutManager(new LinearLayoutManager(getContext()));
+        lcc = new ListaCreadaCero();
+        lsd = new ListaSinDescripcion();
 
-        //listaPersonajes = llenarLista();
 
 
 
         ld = new ListaDescripcion();
         ArrayList<String> busqueda = ld.rellenaNombresVillanos();
+        busqueda.addAll(lsd.rellenaNombresVillanos());
 
         RestApiAdapter restApiAdapter = new RestApiAdapter();
         Service service = restApiAdapter.getPersonajeService();
@@ -83,24 +90,28 @@ public class VillanosFragment extends Fragment {
                             String nombre = personaje.getString("name");
                             String descripcion = personaje.getString("description");
 
-                            /*
-                            String nombre = personaje.getString("name") + "/" + personaje.getString("description");
-                            String[] split = nombre.split("/");
-                            if(split.length == 1){
-                            String description = "error";
-                            }else{
-                            String description = split[1];
-                            }
-                            String nombre = split[0];
-                             */
-
 
 
                             JSONObject image = personaje.getJSONObject("thumbnail");
 
                             String imagenPersonaje = image.getString("path") + "." + image.getString("extension");
 
-                            listaPersonajes.add(new Personaje(nombre,peliculas,descripcion,imagenPersonaje));
+                            listaPersonajes.add(new Personaje(nombre,descripcion,peliculas,imagenPersonaje));
+
+                            if(listaPersonajes.size() ==11+15){
+                                ArrayList<String> guardaD =lsd.rellenaDescripcionHeroes();
+                                Log.d("HeroesFragment", listaPersonajes.get(9).getName());
+                                String d;
+                                /*for(int i = 0; i< listaPersonajes.size()-11; ++i){
+                                    d = guardaD.get(i);
+                                    listaPersonajes.get(i+11).setDescription(d);
+                                }*/
+                                listaPersonajes.addAll(lcc.creaPersonajesVillanos());
+                            }
+
+
+
+
                             PersonajeAdapter adapter;
                             recyclerPersonajes.setAdapter(adapter = new PersonajeAdapter(getActivity(),listaPersonajes,new RecyclerViewOnItemClickListener() {
                                 @Override
@@ -129,7 +140,7 @@ public class VillanosFragment extends Fragment {
                         }
                     }catch (JSONException e1){
                         e1.printStackTrace();
-                        //Toast.makeText(getActivity(),"falla",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),"falla",Toast.LENGTH_SHORT).show();
 
                     }
                 }
