@@ -3,6 +3,7 @@ package com.example.luisangel.biorvel.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -122,21 +123,52 @@ public class VillanosFragment extends Fragment {
                                     //String peliculasKey = listaPersonajes.get(view.getId()).getPeliculas();
                                     String imagenKey = listaPersonajes.get(position).getImagen();
                                     Intent intent = new Intent(getActivity(),PersonajeActivity.class);
+                                    String peliculasKey;
 
-                                    if(descripcionKey == ""){
-                                        intent.putExtra("descripcionKey","NO se que pasa");
+
+                                    if(listaPersonajes.get(position).getPeliculas() == ""){
+                                        peliculasKey = "Set";
+                                        intent.putExtra("peliculasKey",peliculasKey);
                                     }else{
-                                        intent.putExtra("descripcionKey",descripcionKey);
+                                        peliculasKey = listaPersonajes.get(position).getPeliculas();
+                                        intent.putExtra("peliculasKey",peliculasKey);
                                     }
+
 
                                     //Pasando los datos
                                     intent.putExtra("nombreKey", nombreKey);
+                                    intent.putExtra("descripcionKey",descripcionKey);
+                                    Log.d("HeroesFragment",listaPersonajes.get(position).getPeliculas());
 
-                                    //intent.putExtra("peliculasKey",peliculasKey);
                                     intent.putExtra("imagenKey",imagenKey);
                                     startActivity(intent);
                                 }
                             }));
+                        }else{
+                            Toast.makeText(getActivity(),"Se acabaron las llamadas chavo o no hay Internet", Toast.LENGTH_LONG).show();
+                            /*if(listaPersonajes.size() == 0){
+                                listaPersonajes.addAll(lcc.creaPersonajesVillanos());
+                                PersonajeAdapter adapter;
+                                recyclerPersonajes.setAdapter(adapter = new PersonajeAdapter(getActivity(),listaPersonajes,new RecyclerViewOnItemClickListener() {
+                                    @Override
+                                    public void onClick(View view, int position) {
+                                        //Toast.makeText(getActivity(),listaPersonajes.get(position).getDescription(),Toast.LENGTH_SHORT).show();
+                                        String nombreKey = listaPersonajes.get(position).getName();
+                                        String descripcionKey = listaPersonajes.get(position).getDescription();
+                                        String peliculasKey = listaPersonajes.get(view.getId()).getPeliculas();
+                                        String imagenKey = listaPersonajes.get(position).getImagen();
+                                        Intent intent = new Intent(getActivity(),PersonajeActivity.class);
+
+
+                                        //Pasando los datos
+                                        intent.putExtra("nombreKey", nombreKey);
+                                        intent.putExtra("descripcionKey",descripcionKey);
+                                        intent.putExtra("peliculasKey",peliculasKey);
+                                        intent.putExtra("imagenKey",imagenKey);
+                                        startActivity(intent);
+                                    }
+                                }));
+                            }*/
                         }
                     }catch (JSONException e1){
                         e1.printStackTrace();

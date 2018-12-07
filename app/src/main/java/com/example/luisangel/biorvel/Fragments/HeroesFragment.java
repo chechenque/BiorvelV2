@@ -79,7 +79,7 @@ public class HeroesFragment extends Fragment {
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     try {
                         if(response.isSuccessful()){
-                            String peliculas = "";
+                            final String peliculas = "";
                             //Toast.makeText(getActivity(), "in response", Toast.LENGTH_SHORT).show();
                             JSONObject jsonObject = new JSONObject(response.body().getAsJsonObject("data").toString());
                             JSONArray jsonArray = jsonObject.getJSONArray("results");
@@ -98,7 +98,7 @@ public class HeroesFragment extends Fragment {
 
                             if(listaPersonajes.size() ==11+24){
                                 ArrayList<String> guardaD =lsd.rellenaDescripcionHeroes();
-                                Log.d("HeroesFragment", listaPersonajes.get(9).getName());
+                                //Log.d("HeroesFragment", listaPersonajes.get(9).getName());
                                 String d;
                                 /*for(int i = 0; i< listaPersonajes.size()-11; ++i){
                                     d = guardaD.get(i);
@@ -120,15 +120,52 @@ public class HeroesFragment extends Fragment {
                                     //String peliculasKey = listaPersonajes.get(view.getId()).getPeliculas();
                                     String imagenKey = listaPersonajes.get(position).getImagen();
                                     Intent intent = new Intent(getActivity(),PersonajeActivity.class);
+                                    String peliculasKey;
+
+
+                                    if(listaPersonajes.get(position).getPeliculas() == ""){
+                                        peliculasKey = "Set";
+                                        intent.putExtra("peliculasKey",peliculasKey);
+                                    }else{
+                                        peliculasKey = listaPersonajes.get(position).getPeliculas();
+                                        intent.putExtra("peliculasKey",peliculasKey);
+                                    }
+
 
                                     //Pasando los datos
                                     intent.putExtra("nombreKey", nombreKey);
                                     intent.putExtra("descripcionKey",descripcionKey);
-                                    //intent.putExtra("peliculasKey",peliculasKey);
+                                    Log.d("HeroesFragment",listaPersonajes.get(position).getPeliculas());
+
                                     intent.putExtra("imagenKey",imagenKey);
                                     startActivity(intent);
                                 }
                             }));
+                        }else{
+                            //Toast.makeText(getActivity(),"Se acabaron las llamadas chavo o no hay Internet", Toast.LENGTH_LONG).show();
+                            /*if(listaPersonajes.size() == 0){
+                                listaPersonajes.addAll(lcc.creaPersonajesVillanos());
+                                PersonajeAdapter adapter;
+                                recyclerPersonajes.setAdapter(adapter = new PersonajeAdapter(getActivity(),listaPersonajes,new RecyclerViewOnItemClickListener() {
+                                    @Override
+                                    public void onClick(View view, int position) {
+                                        //Toast.makeText(getActivity(),listaPersonajes.get(position).getDescription(),Toast.LENGTH_SHORT).show();
+                                        String nombreKey = listaPersonajes.get(position).getName();
+                                        String descripcionKey = listaPersonajes.get(position).getDescription();
+                                        String peliculasKey = listaPersonajes.get(view.getId()).getPeliculas();
+                                        String imagenKey = listaPersonajes.get(position).getImagen();
+                                        Intent intent = new Intent(getActivity(),PersonajeActivity.class);
+
+
+                                        //Pasando los datos
+                                        intent.putExtra("nombreKey", nombreKey);
+                                        intent.putExtra("descripcionKey",descripcionKey);
+                                        intent.putExtra("peliculasKey",peliculasKey);
+                                        intent.putExtra("imagenKey",imagenKey);
+                                        startActivity(intent);
+                                    }
+                                }));
+                            }*/
                         }
                     }catch (JSONException e1){
                         e1.printStackTrace();
